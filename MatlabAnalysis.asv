@@ -46,7 +46,4 @@ data= readMyData(filename);
 idxL= find(d1>0.3 &d1<3.0);
 %lin region
 dL= d1(idxL);
-fL= f1(idxL);
-plot(dL,fL,'g')
-
 
