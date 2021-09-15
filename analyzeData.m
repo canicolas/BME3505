@@ -2,11 +2,11 @@
 
 % this code does not calculate strain at failure and toughness
 % you need to add few more instructions to calculate these values
-clear; close all; clc;
+
 
 
 %% Given data:
-fileName = 'Specimen_RawData_1.csv';
+fileName= input('Name of the file: ','s');
 
 
 %% Extract the specimen dimensions from .csv file  
@@ -134,20 +134,25 @@ beep
 disp('From subplot 3 provide strain limits for linear region')
 disp('Example [eL_start, eL_end] = [0.15 0.25]')
 
-eL_bounds = input('[eL_start, eL_end] = '); 
-eL = e(e>eL_bounds(1) & e<eL_bounds(2)); % L = linear region
-
-trendLine = maxSlope*eL + intercept_trendLine;
-
-plot(eL, trendLine, '-k') % plot the line
-
-
-lineEq = [num2str(maxSlope),'*strain + ',num2str(intercept_trendLine)];
-legend('experimental data', lineEq , 'Location','southeast')
-
-linkaxes([h1 h2],'x'); 
+% eL_bounds = input('[eL_start, eL_end] = '); 
+% eL = e(e>eL_bounds(1) & e<eL_bounds(2)); % L = linear region
+% 
+% trendLine = maxSlope*eL + intercept_trendLine;
+% 
+% plot(eL, trendLine, '-k') % plot the line
+% 
+% 
+% lineEq = [num2str(maxSlope),'*strain + ',num2str(intercept_trendLine)];
+% legend('experimental data', lineEq , 'Location','southeast')
+% 
+% linkaxes([h1 h2],'x'); 
 
 
 %% Evaluate the goodness of fit 
-% for R2 see the code from Part 1
+SStot= sum((fL-mean(fL)).^2); 
+SSres = sum((fL- F_predicted).^2);
+R2= 1-SSres/SStot;
+%%%%The model
+equ= sprintf('F= %.2f*d +%.2f \n    R2= %.2f', p1, p2, R2); 
+text(10, 200, equ)
 
